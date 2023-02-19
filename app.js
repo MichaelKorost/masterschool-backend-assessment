@@ -7,9 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", async (req, res) => {
-  res.status(200).json({ message: "Welcome to the Unsplash API!" });
-});
+app.use("/api/photos", require("./routes/photoRoutes"));
 
 app.listen(process.env.PORT, async () => {
   console.log(`listening on port ${process.env.PORT}`);
