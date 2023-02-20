@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/photos", require("./routes/photoRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/favorites", require("./routes/favoritesRoutes"));
 
 app.listen(process.env.PORT, async () => {
   console.log(`listening on port ${process.env.PORT}`);
