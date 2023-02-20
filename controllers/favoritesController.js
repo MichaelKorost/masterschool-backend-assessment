@@ -72,26 +72,31 @@ const editFavorite = asyncHandler(async (req, res) => {
   const { description } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid id provided" });
+    res.status(400);
+    throw new Error("Invalid id provided");
   }
 
   if (!description) {
-    res.status(400).json({ message: "Please fill description field" });
+    res.status(400);
+    throw new Error("Please fill description field");
   }
 
   const favorite = await FavoritePhoto.findById(id);
 
   if (!favorite) {
-    res.status(404).json({ message: "No favorite found" });
+    res.status(404);
+    throw new Error("No favorite found");
   }
 
   if (!req.user) {
-    res.status(401).json({ message: "User not logged in" });
+    res.status(401);
+    throw new Error("User not logged in");
   }
 
   // validating the logged user favoritePhoto ids match
   if (favorite.user.toString() !== req.user.id) {
-    res.status(401).json({ message: "User not authorized" });
+    res.status(401);
+    throw new Error("User not authorized");
   }
 
   const updatedFavorite = await FavoritePhoto.findByIdAndUpdate(
